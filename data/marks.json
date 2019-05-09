@@ -1,0 +1,180 @@
+{
+  "South Bar" : {
+    "lattitude": {
+      "deg": 53,
+      "min": 20.22
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 7.45
+    },
+    "bearings": {
+
+    }
+  },
+  "New Ross": {
+    "lattitude": {
+      "deg": 53,
+      "min": 19.60
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 6.30
+    },
+    "bearings": {}
+  },
+  "Saoirse": {
+    "lattitude": {
+      "deg": 53,
+      "min": 19.02
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 8.15
+    },
+    "bearings": {}
+  },
+  "Middle": {
+    "lattitude": {
+      "deg": 53,
+      "min": 19.55
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 7.48
+    },
+    "bearings": {}
+  },
+  "Boyd": {
+    "lattitude": {
+      "deg": 53,
+      "min": 18.85
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 7.37
+    },
+    "bearings": {}
+  },
+  "Pier": {
+    "lattitude": {
+      "deg": 53,
+      "min": 18.10
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 6.84
+    },
+    "bearings": {}
+  },
+  "Omega": {
+    "lattitude": {
+      "deg": 53,
+      "min": 17.78
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 6.23
+    },
+    "bearings": {}
+  },
+  "Merrion": {
+    "lattitude": {
+      "deg": 53,
+      "min": 18.92
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 9.20
+    },
+    "bearings": {}
+  },
+  "Seapoint": {
+    "lattitude": {
+      "deg": 53,
+      "min": 19.48
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 0.60
+    },
+    "bearings": {}
+  },
+  "Finish-Turning": {
+    "lattitude": {
+      "deg": 53,
+      "min": 18.43
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 8.34
+    },
+    "bearings": {}
+  },
+  "Bray Outfall": {
+    "lattitude": {
+      "deg": 53,
+      "min": 13.25
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 4.49
+    },
+    "bearings": {}
+  },
+  "East Kish": {
+    "lattitude": {
+      "deg": 53,
+      "min": 14.34
+    },
+    "longitude": {
+      "deg": 5,
+      "min": 53.58
+    },
+    "bearings": {}
+  },
+  "Shanganagh Outfall": {
+    "lattitude": {
+      "deg": 53,
+      "min": 14.90
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 5.06
+    },
+    "bearings": {}
+  },
+  "Muglins": {
+    "lattitude": {
+      "deg": 53,
+      "min": 16.53
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 4.57
+    },
+    "bearings": {}
+  },
+  "North Kish": {
+    "lattitude": {
+      "deg": 53,
+      "min": 18.55
+    },
+    "longitude": {
+      "deg": 5,
+      "min": 56.43
+    },
+    "bearings": {}
+  },
+  "South Burford": {
+    "lattitude": {
+      "deg": 53,
+      "min": 18.42
+    },
+    "longitude": {
+      "deg": 6,
+      "min": 1.28
+    },
+    "bearings": {}
+  }
+}
