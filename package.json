@@ -1,21 +1,43 @@
 {
   "name": "bearingchartgen",
+  "private": true,
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "author": "Ben Colwell",
+  "license": "ISC",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "format": "prettier --write src/**/*.{js,jsx}",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BenColwell131/BearingCalc.git"
   },
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/BenColwell131/BearingCalc/issues"
   },
   "homepage": "https://github.com/BenColwell131/BearingCalc#readme",
+  "dependencies": {
+    "babel-plugin-styled-components": "^1.10.0",
+    "gatsby": "^2.4.3",
+    "gatsby-image": "^2.0.41",
+    "gatsby-plugin-manifest": "^2.1.1",
+    "gatsby-plugin-offline": "^2.1.0",
+    "gatsby-plugin-react-helmet": "^3.0.12",
+    "gatsby-plugin-sharp": "^2.0.37",
+    "gatsby-plugin-styled-components": "^3.0.7",
+    "gatsby-source-filesystem": "^2.0.33",
+    "gatsby-transformer-sharp": "^2.1.19",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.1",
+    "styled-components": "^4.2.0"
+  },
   "devDependencies": {
     "babel-eslint": "^9.0.0",
     "eslint": "^5.14.1",

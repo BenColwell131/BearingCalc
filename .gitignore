@@ -51,11 +51,9 @@ typings/
 # Output of 'npm pack'
 *.tgz
 
-# Yarn Integrity file
-.yarn-integrity
+# gatsby files
+.cache/
+public
 
 # dotenv environment variables file
 .env
-
-# next.js build output
-.next
