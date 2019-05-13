@@ -4,7 +4,7 @@ const path = require('path');
 
 // Globals
 const marks = JSON.parse(
-  fs.readFileSync(path.join(__dirname, '../', 'data', 'marks.json'))
+  fs.readFileSync(path.join(__dirname, '../', 'data', 'sampleMarks.json'))
 );
 
 // Converts from radians to degrees.
@@ -20,17 +20,18 @@ Math.radians = function(degrees) {
 // Convert to decimal degrees (DD) from degrees and decimal minutes (DDM)
 let latDD;
 let longDD;
-for (const markname in marks) {
+Object.keys(marks).forEach(markname => {
   const mark = marks[markname];
   latDD = mark.lattitude.deg + mark.lattitude.min / 60;
   longDD = mark.longitude.deg + mark.longitude.min / 60;
   marks[markname].latDD = latDD;
   marks[markname].longDD = -longDD; // TODO: this negative indicates W
-}
+});
 
-for (const originMarkname in marks) {
+// For each mark, compare against every other mark
+Object.keys(marks).forEach(originMarkname => {
   const originMark = marks[originMarkname];
-  for (const destMarkname in marks) {
+  Object.keys(marks).forEach(destMarkname => {
     if (originMarkname !== destMarkname) {
       const destMark = marks[destMarkname];
       // Calculate bearing
@@ -52,6 +53,7 @@ for (const originMarkname in marks) {
       brng = Math.round(brng);
       marks[originMarkname].bearings[destMarkname] = brng;
     }
-  }
-}
-console.log(marks);
+  });
+});
+
+// console.log(marks);

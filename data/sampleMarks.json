@@ -1,5 +1,5 @@
 {
-  "South Bar" : {
+  "South Bar": {
     "lattitude": {
       "deg": 53,
       "min": 20.22
@@ -8,18 +8,16 @@
       "deg": 6,
       "min": 7.45
     },
-    "bearings": {
-
-    }
+    "bearings": {}
   },
   "New Ross": {
     "lattitude": {
       "deg": 53,
-      "min": 19.60
+      "min": 19.6
     },
     "longitude": {
       "deg": 6,
-      "min": 6.30
+      "min": 6.3
     },
     "bearings": {}
   },
@@ -59,7 +57,7 @@
   "Pier": {
     "lattitude": {
       "deg": 53,
-      "min": 18.10
+      "min": 18.1
     },
     "longitude": {
       "deg": 6,
@@ -85,7 +83,7 @@
     },
     "longitude": {
       "deg": 6,
-      "min": 9.20
+      "min": 9.2
     },
     "bearings": {}
   },
@@ -96,7 +94,7 @@
     },
     "longitude": {
       "deg": 6,
-      "min": 0.60
+      "min": 0.6
     },
     "bearings": {}
   },
@@ -136,7 +134,7 @@
   "Shanganagh Outfall": {
     "lattitude": {
       "deg": 53,
-      "min": 14.90
+      "min": 14.9
     },
     "longitude": {
       "deg": 6,
