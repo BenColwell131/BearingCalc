@@ -8,6 +8,7 @@ import SEO from '../components/seo';
 import Tile from '../components/tile';
 
 import Boat from '../images/boat.svg';
+import Delete from '../images/delete.svg';
 
 // Styled Components
 const FlexTile = styled(Tile)`
@@ -33,6 +34,7 @@ const StyledInputGroup = styled.fieldset`
   padding: 0;
   margin: 0;
   margin-right: 1em;
+  width: 100%;
 `;
 
 const StyledLabel = styled.label`
@@ -41,11 +43,28 @@ const StyledLabel = styled.label`
   opacity: 0.87;
 `;
 
-const StyledField = styled(Field)`
+const StandardField = styled(Field)`
   border: 1px solid var(--dark-grey);
   border-radius: 5px;
   padding: 15px 15px;
   color: var(--dark-blue);
+  /* width: 10rem; */
+  width: 100%;
+`;
+
+const MiniField = styled(Field)`
+  border: 1px solid var(--dark-grey);
+  border-radius: 5px;
+  padding: 15px 15px;
+  color: var(--dark-blue);
+  width: 4rem;
+`;
+
+const FieldUnit = styled.p`
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0;
+  padding: 0 0.2rem;
 `;
 
 const Button = styled.button`
@@ -59,12 +78,54 @@ const Button = styled.button`
   font-weight: 500;
   height: min-content;
   margin-top: auto;
+  /* margin-left: auto; */
+  cursor: pointer;
+`;
+
+const ButtonLink = styled(Link)`
+  padding: 15px 30px;
+  border: none;
+  background-color: var(--accent-blue);
+  color: white;
+  border-radius: 7px;
+  font-size: 1.125em;
+  opacity: 1;
+  font-weight: 500;
+  height: min-content;
+  margin-top: auto;
+  margin-left: auto;
+  display: block;
+  width: min-content;
+  white-space: nowrap;
+  text-decoration: none;
+`;
+const NoMarksLabel = styled.p`
+  width: 100%;
+  padding: 2em;
+  opacity: 0.75;
+  text-align: center;
+  font-size: 1em;
+  font-weight: 500;
+  color: var(--dark-blue);
+  border: 2px dashed rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  margin: 0;
 `;
 
 class IndexPage extends React.Component {
   state = {
     marks: [],
   };
+
+  handleMarkDelete(index, e) {
+    const { marks } = this.state;
+    e.preventDefault();
+    // Remove unwanted mark
+    marks.splice(index, 1); // Throw away result (don't need it)
+    this.setState({
+      marks,
+    });
+  }
 
   render() {
     const { marks } = this.state;
@@ -88,7 +149,7 @@ class IndexPage extends React.Component {
           <ImageContainer>
             <img
               src={Boat}
-              alt={Boat}
+              alt="Boat"
               style={{ width: `60%`, height: `auto` }}
             />
           </ImageContainer>
@@ -96,68 +157,145 @@ class IndexPage extends React.Component {
         <Tile>
           <h1>Add Mark</h1>
           <Formik
-            initialValues={{ markname: '', letter: '', lat: 99.9, long: 99.9 }}
+            initialValues={{
+              mark: '',
+              letter: '',
+              latDeg: '',
+              latMin: '',
+              long: '',
+            }}
             onSubmit={(values, actions) => {
+              this.setState({
+                marks: [...marks, values],
+              });
+              console.log(JSON.stringify(marks));
               setTimeout(() => {
-                // alert(JSON.stringify(values, null, 2));
                 actions.setSubmitting(false);
-                this.setState({
-                  marks: [...marks, values],
-                });
-                // marks.push(values);
-                console.log(JSON.stringify(marks));
-              }, 10);
+              }, 1000);
             }}
           >
             {() => (
               <Form
-                style={{ display: `flex`, justifyContent: `space-between` }}
+                style={{
+                  display: `flex`,
+                  justifyContent: `space-between`,
+                  // flexWrap: `wrap`,
+                  // TODO: Change flex direction on smaller screen sizes
+                  // flexDirection: `column`,
+                }}
               >
                 <StyledInputGroup>
                   <StyledLabel>Markname:</StyledLabel>
-                  <StyledField
-                    name="markname"
+                  <StandardField
+                    name="mark"
                     type="text"
-                    placeholder="Markname"
+                    placeholder="Island"
+                    autoComplete="off"
                   />
                 </StyledInputGroup>
                 <StyledInputGroup>
                   <StyledLabel>Letter:</StyledLabel>
-                  <StyledField name="letter" type="text" placeholder="Letter" />
+                  <StandardField
+                    name="letter"
+                    type="text"
+                    placeholder="Letter"
+                    autoComplete="off"
+                  />
                 </StyledInputGroup>
                 <StyledInputGroup>
                   <StyledLabel>Lattitude:</StyledLabel>
-                  <StyledField name="lat" type="number" />
+                  <div style={{ display: `flex` }}>
+                    <MiniField
+                      name="latDeg"
+                      type="text"
+                      placeholder="54"
+                      autoComplete="off"
+                    />
+                    <FieldUnit>°</FieldUnit>
+                    <StandardField
+                      name="latMin"
+                      type="text"
+                      placeholder="94.2"
+                      autoComplete="off"
+                    />
+                    <FieldUnit>'</FieldUnit>
+                  </div>
                 </StyledInputGroup>
                 <StyledInputGroup>
                   <StyledLabel>Longitude:</StyledLabel>
-                  <StyledField name="long" type="number" />
+                  <div style={{ display: `flex` }}>
+                    <MiniField
+                      name="longDeg"
+                      type="text"
+                      placeholder="57"
+                      autoComplete="off"
+                    />
+                    <FieldUnit>°</FieldUnit>
+                    <StandardField
+                      name="longMin"
+                      type="text"
+                      placeholder="92.2"
+                      autoComplete="off"
+                    />
+                    <FieldUnit>'</FieldUnit>
+                  </div>
                 </StyledInputGroup>
-                <Button type="submit" style={{ marginLeft: `auto` }}>
-                  Add
-                </Button>
+                <Button type="submit">Add</Button>
               </Form>
             )}
           </Formik>
         </Tile>
         <Tile>
           <h1>Marks</h1>
-          {console.log(JSON.stringify(marks))}
-          <ol>
-            {marks.map((mark, index) => (
-              <li
-                key={index}
-                style={{ display: `flex`, justifyContent: `space-between` }}
-              >
-                <p>{mark.markname}</p>
-                <p>{mark.letter}</p>
-                <p>{mark.lat}</p>
-                <p>{mark.long}</p>
-              </li>
-            ))}
-          </ol>
+          {marks.length > 0 ? (
+            // TODO: Do i want this scroll?
+            // <div style={{ maxHeight: `400px`, overflowY: `scroll` }}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Markname</th>
+                  <th>Letter</th>
+                  <th>Lattitude</th>
+                  <th>Longitude</th>
+                </tr>
+              </thead>
+              <tbody>
+                {marks.map((mark, index) => (
+                  <>
+                    <tr>
+                      <td style={{ overflowWrap: `break-word` }}>
+                        {mark.mark}
+                      </td>
+                      <td>{mark.letter}</td>
+                      <td>
+                        {mark.latDeg}° {mark.latMin}'
+                      </td>
+                      <td>
+                        {mark.longDeg}° {mark.longMin}'
+                        <input
+                          type="image"
+                          src={Delete}
+                          alt="Delete"
+                          style={{
+                            width: `20px`,
+                            position: `absolute`,
+                            right: `10px`,
+                          }}
+                          onClick={e => this.handleMarkDelete(index, e)}
+                        />
+                      </td>
+                    </tr>
+                  </>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <NoMarksLabel>No marks added</NoMarksLabel>
+          )}
         </Tile>
-        <Link to="/page-2/">Go to page 2</Link>
+        <ButtonLink to="/bearing-chart/" state={{ marks }}>
+          Generate bearing chart
+        </ButtonLink>
       </Layout>
     );
   }

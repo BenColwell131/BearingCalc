@@ -21,7 +21,7 @@ const App = styled.div`
 `;
 
 const Main = styled.main`
-  padding: 20px 40px;
+  padding: 20px 40px 40px 40px;
   &:before {
     content: '';
     background-color: var(--dark-blue);
