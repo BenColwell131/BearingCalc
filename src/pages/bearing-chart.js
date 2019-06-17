@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
+import styled from 'styled-components';
+
+import html2canvas from 'html2canvas';
+import JSPDF from 'jspdf';
+import ExcellentExport from 'excellentexport';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
@@ -34,6 +39,7 @@ function calculateBearing(
   destLongMin
 ) {
   // Convert all lat/long to DD format
+  // TODO: Currently convert each lat/long numerous times
   const srcLat = convertToDD(srcLatDeg, srcLatMin);
   const srcLong = convertToDD(srcLongDeg, srcLongMin);
   const destLat = convertToDD(destLatDeg, destLatMin);
@@ -59,6 +65,77 @@ function calculateBearing(
   return brng;
 }
 
+const downloadPDF = () => {
+  const chart = document.getElementById('PDFContainer');
+  // canvas.toDataUrl returns img at 96DPI, A4 paper dimensions are 1123x794 at this (landscape).
+  const a4Width = 1123;
+  const a4Height = 794;
+
+  html2canvas(chart).then(canvas => {
+    // scale if canvas > A4
+    if (canvas.width > a4Width || canvas.height > a4Height) {
+      // scale by whichever scale factor is smaller (e.g: shrinks canvas more)
+      const scaleFactor =
+        a4Width / canvas.width < a4Height / canvas.height
+          ? a4Width / canvas.width
+          : a4Height / canvas.height;
+
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = canvas.width;
+      tempCanvas.height = canvas.height;
+      const tempCtx = tempCanvas.getContext('2d');
+      tempCtx.drawImage(canvas, 0, 0);
+
+      canvas.width *= scaleFactor;
+      canvas.height *= scaleFactor;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(
+        tempCanvas,
+        0,
+        0,
+        tempCanvas.width,
+        tempCanvas.height,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+    }
+
+    // canvas is an SVG, convert to PNG
+    const pngChart = canvas.toDataURL('image/png');
+    const pdf = new JSPDF({ orientation: 'landscape' });
+    pdf.addImage(pngChart, 'PNG', 0, 0);
+    pdf.save('bearingChart.pdf');
+  });
+};
+
+const downloadCSV = () => {
+  const chart = document.getElementById('PDFContainer');
+
+  const bearingChart = document.getElementById('bearingChart');
+  return ExcellentExport.convert(
+    { anchor: chart, filename: 'bearingChart.csv', format: 'csv' },
+    [{ name: 'Sheet 1', from: { table: bearingChart } }]
+  );
+};
+
+// TODO: This is in both pages, abstract to its own component file
+const Button = styled.button`
+  padding: 15px 30px;
+  border: none;
+  background-color: var(--accent-blue);
+  color: white;
+  border-radius: 7px;
+  font-size: 1.125em;
+  opacity: 1;
+  font-weight: 500;
+  height: min-content;
+  margin-top: auto;
+  /* margin-left: auto; */
+  cursor: pointer;
+  display: block; //!This is new
+`;
 class ChartPage extends React.Component {
   constructor(props) {
     super(props);
@@ -76,55 +153,67 @@ class ChartPage extends React.Component {
         <SEO title="Page two" />
         <Tile>
           <h1>Bearing chart</h1>
-          {marks.length > 0 ? (
-            <table>
-              <thead>
-                <tr>
-                  <th style={{ backgroundColor: `#000` }}>From</th>
-                  <th
-                    colSpan={marks.length}
-                    style={{ backgroundColor: `#000` }}
-                  >
-                    To
-                  </th>
-                </tr>
-                <tr>
-                  <th>-</th>
-                  {marks.map(mark => (
-                    <th scope="col">{mark.mark}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {marks.map(srcMark => (
+          <div id="PDFContainer">
+            {marks.length > 0 ? (
+              <table id="bearingChart" style={{ overflow: `scroll` }}>
+                <thead>
                   <tr>
-                    <th scope="row">{srcMark.mark}</th>
-                    {marks.map(destMark => {
-                      const bearing =
-                        srcMark === destMark
-                          ? '-'
-                          : calculateBearing(
-                              srcMark.latDeg,
-                              srcMark.latMin,
-                              srcMark.longDeg,
-                              srcMark.longMin,
-                              destMark.latDeg,
-                              destMark.latMin,
-                              destMark.longDeg,
-                              destMark.longMin
-                            );
-                      return <td>{bearing}</td>;
-                    })}
+                    <th style={{ backgroundColor: `#000` }}>From</th>
+                    <th
+                      colSpan={marks.length}
+                      style={{ backgroundColor: `#000` }}
+                    >
+                      To
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>
-              No marks defined. <Link to="/">Go back</Link> and define some?
-            </p>
-          )}
+                  <tr>
+                    <th>-</th>
+                    {marks.map(mark => (
+                      <th scope="col">
+                        {mark.mark}
+                        {mark.letter && <> ({mark.letter})</>}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {marks.map(srcMark => (
+                    <tr>
+                      <th scope="row">
+                        {srcMark.mark}
+                        {srcMark.letter && <> ({srcMark.letter})</>}
+                      </th>
+                      {marks.map(destMark => {
+                        const bearing =
+                          srcMark === destMark
+                            ? '-'
+                            : calculateBearing(
+                                srcMark.latDeg,
+                                srcMark.latMin,
+                                srcMark.longDeg,
+                                srcMark.longMin,
+                                destMark.latDeg,
+                                destMark.latMin,
+                                destMark.longDeg,
+                                destMark.longMin
+                              );
+                        return <td>{bearing}</td>;
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>
+                No marks defined. <Link to="/">Go back</Link> and define some?
+              </p>
+            )}
+          </div>
         </Tile>
+        <Button onClick={downloadPDF}>Download PDF</Button>
+        <a download="bearingChart.csv" href="#" onClick={downloadCSV}>
+          Download CSV
+        </a>
         <p>{JSON.stringify(marks)}</p>
         <Link to="/">Go back to the homepage</Link>
       </Layout>

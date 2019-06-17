@@ -114,7 +114,104 @@ const NoMarksLabel = styled.p`
 
 class IndexPage extends React.Component {
   state = {
-    marks: [],
+    marks: [
+      {
+        mark: 'South Bar',
+        letter: 'E',
+        latDeg: '53',
+        latMin: '20.22',
+        longDeg: '6',
+        longMin: '7.45',
+      },
+      {
+        mark: 'New Ross',
+        letter: 'G',
+        latDeg: '53',
+        latMin: '19.6',
+        longDeg: '6',
+        longMin: '6.3',
+      },
+      {
+        mark: 'Saoirse',
+        letter: 'B',
+        latDeg: '53',
+        latMin: '19.02',
+        longDeg: '6',
+        longMin: '8.15',
+      },
+      {
+        mark: 'Middle',
+        letter: 'M',
+        latDeg: '53',
+        latMin: '19.55',
+        longDeg: '6',
+        longMin: '7.48',
+      },
+      {
+        mark: 'Boyd',
+        letter: 'K',
+        latDeg: '53',
+        latMin: '18.85',
+        longDeg: '6',
+        longMin: '7.37',
+      },
+      {
+        mark: 'Pier',
+        letter: 'V',
+        latDeg: '53',
+        latMin: '18.1',
+        longDeg: '6',
+        longMin: '6.84',
+      },
+      {
+        mark: 'South Bar',
+        letter: 'E',
+        latDeg: '53',
+        latMin: '20.22',
+        longDeg: '6',
+        longMin: '7.45',
+      },
+      {
+        mark: 'New Ross',
+        letter: 'G',
+        latDeg: '53',
+        latMin: '19.6',
+        longDeg: '6',
+        longMin: '6.3',
+      },
+      {
+        mark: 'Saoirse',
+        letter: 'B',
+        latDeg: '53',
+        latMin: '19.02',
+        longDeg: '6',
+        longMin: '8.15',
+      },
+      {
+        mark: 'Middle',
+        letter: 'M',
+        latDeg: '53',
+        latMin: '19.55',
+        longDeg: '6',
+        longMin: '7.48',
+      },
+      {
+        mark: 'Boyd',
+        letter: 'K',
+        latDeg: '53',
+        latMin: '18.85',
+        longDeg: '6',
+        longMin: '7.37',
+      },
+      {
+        mark: 'Pier',
+        letter: 'V',
+        latDeg: '53',
+        latMin: '18.1',
+        longDeg: '6',
+        longMin: '6.84',
+      },
+    ],
   };
 
   handleMarkDelete(index, e) {
@@ -162,7 +259,8 @@ class IndexPage extends React.Component {
               letter: '',
               latDeg: '',
               latMin: '',
-              long: '',
+              longDeg: '',
+              longMin: '',
             }}
             onSubmit={(values, actions) => {
               this.setState({
