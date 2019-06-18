@@ -49,8 +49,8 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ children, primary, style }) => (
-  <StyledButton primary={primary} style={style}>
+const Button = ({ children, primary, style, type }) => (
+  <StyledButton primary={primary} style={style} type={type}>
     {children}
   </StyledButton>
 );
@@ -59,6 +59,7 @@ Button.propTypes = {
   children: PropTypes.node.isRequired,
   primary: PropTypes.bool,
   style: PropTypes.object,
+  type: PropTypes.string,
 };
 
 export default Button;
