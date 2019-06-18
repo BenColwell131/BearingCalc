@@ -1,0 +1,23 @@
+### TODO:
+
+- [ ] Abstract out components
+  - [x] Add mark form
+  - [ ] Marks table
+  - [ ] Bearing chart
+  - [x] Button
+- [ ] Responsiveness
+  - [x] Add mark form
+  - [ ] Marks table
+  - [ ] Bearing chart
+  - [x] Buttons
+- [x] Form validation
+- [ ] Text content
+- [ ] Favicon
+- [ ] Bearing chart page text/icon?
+- [ ] Readme
+- [ ] Scrollable marks list?
+- [ ] Editable marks list?
+- [ ] Tidy code
+- [ ] No marks picture
+- [ ] Chart download weird when on small screens.
+- [ ] N/S and E/W

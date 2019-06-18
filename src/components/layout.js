@@ -33,6 +33,10 @@ const Main = styled.main`
     width: 100%;
     z-index: 0;
   }
+
+  @media (max-width: 30em) {
+    padding: 20px;
+  }
 `;
 const Footer = styled.footer`
   margin-top: auto;

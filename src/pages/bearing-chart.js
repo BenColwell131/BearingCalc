@@ -5,12 +5,12 @@ import styled from 'styled-components';
 
 import html2canvas from 'html2canvas';
 import JSPDF from 'jspdf';
-import ExcellentExport from 'excellentexport';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
 
 import Tile from '../components/tile';
+import Button from '../components/button';
 
 // Converts from radians to degrees.
 Math.degrees = function(radians) {
@@ -22,29 +22,8 @@ Math.radians = function(degrees) {
   return degrees * (Math.PI / 180);
 };
 
-// Converts a lat OR a long value from DDM lat/long format to DD lat.long format
-function convertToDD(deg, min) {
-  return deg + min / 60;
-}
-
 // Calculate bearing between two lat/long's in DD format
-function calculateBearing(
-  srcLatDeg,
-  srcLatMin,
-  srcLongDeg,
-  srcLongMin,
-  destLatDeg,
-  destLatMin,
-  destLongDeg,
-  destLongMin
-) {
-  // Convert all lat/long to DD format
-  // TODO: Currently convert each lat/long numerous times
-  const srcLat = convertToDD(srcLatDeg, srcLatMin);
-  const srcLong = convertToDD(srcLongDeg, srcLongMin);
-  const destLat = convertToDD(destLatDeg, destLatMin);
-  const destLong = convertToDD(destLongDeg, destLongMin);
-
+function calculateBearing(srcLat, srcLong, destLat, destLong) {
   const y =
     Math.sin(Math.radians(destLong) - Math.radians(srcLong)) *
     Math.cos(Math.radians(destLat));
@@ -66,7 +45,7 @@ function calculateBearing(
 }
 
 const downloadPDF = () => {
-  const chart = document.getElementById('PDFContainer');
+  const chart = document.getElementById('bearingChart');
   // canvas.toDataUrl returns img at 96DPI, A4 paper dimensions are 1123x794 at this (landscape).
   const a4Width = 1123;
   const a4Height = 794;
@@ -111,30 +90,39 @@ const downloadPDF = () => {
 };
 
 const downloadCSV = () => {
-  const chart = document.getElementById('PDFContainer');
+  // alert('To be implemented');
+  const rows = document
+    .getElementById('bearingChart')
+    .getElementsByTagName('tr');
 
-  const bearingChart = document.getElementById('bearingChart');
-  return ExcellentExport.convert(
-    { anchor: chart, filename: 'bearingChart.csv', format: 'csv' },
-    [{ name: 'Sheet 1', from: { table: bearingChart } }]
-  );
+  let csvContent = 'data:text/csv;charset=utf-8,';
+  for (const rowEl of rows) {
+    const row = rowEl.children;
+    // console.log(row);
+    for (const cell of row) {
+      // console.log(cell.innerHTML);
+      csvContent += `${cell.innerHTML},`;
+    }
+    csvContent += '\n';
+  }
+  // console.log(csvContent);
+  const encodedURI = encodeURI(csvContent);
+  const dlLink = document.createElement('a');
+  dlLink.setAttribute('href', encodedURI);
+  dlLink.setAttribute('download', 'bearingChart.csv');
+  document.body.appendChild(dlLink);
+  dlLink.click();
 };
 
-// TODO: This is in both pages, abstract to its own component file
-const Button = styled.button`
-  padding: 15px 30px;
-  border: none;
-  background-color: var(--accent-blue);
-  color: white;
-  border-radius: 7px;
-  font-size: 1.125em;
-  opacity: 1;
-  font-weight: 500;
-  height: min-content;
-  margin-top: auto;
-  /* margin-left: auto; */
-  cursor: pointer;
-  display: block; //!This is new
+// Styled components
+
+const DownloadButtons = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  @media (max-width: 30em) {
+    flex-direction: column;
+  }
 `;
 class ChartPage extends React.Component {
   constructor(props) {
@@ -153,68 +141,72 @@ class ChartPage extends React.Component {
         <SEO title="Page two" />
         <Tile>
           <h1>Bearing chart</h1>
-          <div id="PDFContainer">
-            {marks.length > 0 ? (
-              <table id="bearingChart" style={{ overflow: `scroll` }}>
-                <thead>
-                  <tr>
-                    <th style={{ backgroundColor: `#000` }}>From</th>
-                    <th
-                      colSpan={marks.length}
-                      style={{ backgroundColor: `#000` }}
-                    >
-                      To
+          {marks.length > 0 ? (
+            <table id="bearingChart" style={{ overflow: `scroll` }}>
+              <thead>
+                <tr>
+                  <th style={{ backgroundColor: `#000`, width: `10%` }}>
+                    From
+                  </th>
+                  <th style={{ backgroundColor: `#000` }} />
+                  <th
+                    colSpan={marks.length}
+                    style={{ backgroundColor: `#000` }}
+                  >
+                    To
+                  </th>
+                </tr>
+                <tr>
+                  <th />
+                  <th />
+                  {marks.map(mark => (
+                    <th scope="col">
+                      {mark.mark}
+                      {/* {mark.letter && <> ({mark.letter})</>} */}
                     </th>
-                  </tr>
-                  <tr>
-                    <th>-</th>
-                    {marks.map(mark => (
-                      <th scope="col">
-                        {mark.mark}
-                        {mark.letter && <> ({mark.letter})</>}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {marks.map(srcMark => (
-                    <tr>
-                      <th scope="row">
-                        {srcMark.mark}
-                        {srcMark.letter && <> ({srcMark.letter})</>}
-                      </th>
-                      {marks.map(destMark => {
-                        const bearing =
-                          srcMark === destMark
-                            ? '-'
-                            : calculateBearing(
-                                srcMark.latDeg,
-                                srcMark.latMin,
-                                srcMark.longDeg,
-                                srcMark.longMin,
-                                destMark.latDeg,
-                                destMark.latMin,
-                                destMark.longDeg,
-                                destMark.longMin
-                              );
-                        return <td>{bearing}</td>;
-                      })}
-                    </tr>
                   ))}
-                </tbody>
-              </table>
-            ) : (
-              <p>
-                No marks defined. <Link to="/">Go back</Link> and define some?
-              </p>
-            )}
-          </div>
+                </tr>
+                <tr>
+                  <th />
+                  <th />
+                  {marks.map(mark => (
+                    <th scope="col">{mark.letter && mark.letter}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {marks.map(srcMark => (
+                  <tr>
+                    <th scope="row">{srcMark.mark}</th>
+                    <th scope="row">{srcMark.letter && srcMark.letter}</th>
+                    {marks.map(destMark => {
+                      const bearing =
+                        srcMark === destMark
+                          ? '-'
+                          : calculateBearing(
+                              srcMark.lat,
+                              srcMark.long,
+                              destMark.lat,
+                              destMark.long
+                            );
+                      return <td>{bearing}</td>;
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>
+              No marks defined. <Link to="/">Go back</Link> and define some?
+            </p>
+          )}
         </Tile>
-        <Button onClick={downloadPDF}>Download PDF</Button>
-        <a download="bearingChart.csv" href="#" onClick={downloadCSV}>
-          Download CSV
-        </a>
-        <p>{JSON.stringify(marks)}</p>
+        <DownloadButtons>
+          <Button onClick={downloadPDF}>Download PDF</Button>
+          <Button primary onClick={downloadCSV}>
+            Download CSV
+          </Button>
+        </DownloadButtons>
         <Link to="/">Go back to the homepage</Link>
       </Layout>
     );
