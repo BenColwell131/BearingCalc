@@ -1,23 +1,23 @@
 ### TODO:
 
-- [ ] Abstract out components
+- [x] Abstract out components
   - [x] Add mark form
-  - [ ] Marks table
-  - [ ] Bearing chart
+  - [x] Marks table
+  - [x] Bearing chart
   - [x] Button
-- [ ] Responsiveness
+- [x] Responsiveness
   - [x] Add mark form
-  - [ ] Marks table
-  - [ ] Bearing chart
+  - [x] Marks table
+  - [x] Bearing chart
   - [x] Buttons
 - [x] Form validation
 - [ ] Text content
 - [ ] Favicon
 - [ ] Bearing chart page text/icon?
 - [ ] Readme
-- [ ] Scrollable marks list?
-- [ ] Editable marks list?
 - [ ] Tidy code
-- [ ] No marks picture
+- [x] No marks picture
 - [ ] Chart download weird when on small screens.
 - [ ] N/S and E/W
+- [ ] Bearings being calculated 2 times on resize
+- [ ] Collapsible single mark tables

@@ -8,41 +8,15 @@ import JSPDF from 'jspdf';
 
 import Layout from '../components/layout';
 import SEO from '../components/seo';
-
 import Tile from '../components/tile';
 import Button from '../components/button';
 
-// Converts from radians to degrees.
-Math.degrees = function(radians) {
-  return radians * (180 / Math.PI);
-};
+import Lost from '../images/lost.svg';
+import BearingChart from '../components/bearingChart';
 
-// Converts from degrees to radians.
-Math.radians = function(degrees) {
-  return degrees * (Math.PI / 180);
-};
-
-// Calculate bearing between two lat/long's in DD format
-function calculateBearing(srcLat, srcLong, destLat, destLong) {
-  const y =
-    Math.sin(Math.radians(destLong) - Math.radians(srcLong)) *
-    Math.cos(Math.radians(destLat));
-  const x =
-    Math.cos(Math.radians(srcLat)) * Math.sin(Math.radians(destLat)) -
-    Math.sin(Math.radians(srcLat)) *
-      Math.cos(Math.radians(destLat)) *
-      Math.cos(Math.radians(destLong) - Math.radians(srcLong));
-  let brng = Math.degrees(Math.atan2(y, x));
-
-  // TODO: Comment below lines.
-  brng = (brng + 360) % 360; //
-
-  // TODO: Implement correct magnetic variation
-  brng += 5; // Account for 5deg west variation of magnetic North.
-  brng = Math.round(brng);
-
-  return brng;
-}
+// --------------------------------------------------
+// Functions
+// --------------------------------------------------
 
 const downloadPDF = () => {
   const chart = document.getElementById('bearingChart');
@@ -114,7 +88,9 @@ const downloadCSV = () => {
   dlLink.click();
 };
 
+// --------------------------------------------------
 // Styled components
+// --------------------------------------------------
 
 const DownloadButtons = styled.div`
   display: flex;
@@ -123,6 +99,21 @@ const DownloadButtons = styled.div`
   @media (max-width: 30em) {
     flex-direction: column;
   }
+`;
+
+const LostImage = styled.img`
+  width: 10%;
+  height: auto;
+  min-width: 10em;
+  padding: 1em;
+`;
+
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
 `;
 class ChartPage extends React.Component {
   constructor(props) {
@@ -142,63 +133,14 @@ class ChartPage extends React.Component {
         <Tile>
           <h1>Bearing chart</h1>
           {marks.length > 0 ? (
-            <table id="bearingChart" style={{ overflow: `scroll` }}>
-              <thead>
-                <tr>
-                  <th style={{ backgroundColor: `#000`, width: `10%` }}>
-                    From
-                  </th>
-                  <th style={{ backgroundColor: `#000` }} />
-                  <th
-                    colSpan={marks.length}
-                    style={{ backgroundColor: `#000` }}
-                  >
-                    To
-                  </th>
-                </tr>
-                <tr>
-                  <th />
-                  <th />
-                  {marks.map(mark => (
-                    <th scope="col">
-                      {mark.mark}
-                      {/* {mark.letter && <> ({mark.letter})</>} */}
-                    </th>
-                  ))}
-                </tr>
-                <tr>
-                  <th />
-                  <th />
-                  {marks.map(mark => (
-                    <th scope="col">{mark.letter && mark.letter}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {marks.map(srcMark => (
-                  <tr>
-                    <th scope="row">{srcMark.mark}</th>
-                    <th scope="row">{srcMark.letter && srcMark.letter}</th>
-                    {marks.map(destMark => {
-                      const bearing =
-                        srcMark === destMark
-                          ? '-'
-                          : calculateBearing(
-                              srcMark.lat,
-                              srcMark.long,
-                              destMark.lat,
-                              destMark.long
-                            );
-                      return <td>{bearing}</td>;
-                    })}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <BearingChart marks={marks} />
           ) : (
-            <p>
-              No marks defined. <Link to="/">Go back</Link> and define some?
-            </p>
+            <FlexContainer>
+              <LostImage src={Lost} alt="Lost" />
+              <p style={{ marginBottom: 0 }}>
+                No marks defined. <Link to="/">Go back</Link> and define some?
+              </p>
+            </FlexContainer>
           )}
         </Tile>
         <DownloadButtons>
@@ -216,4 +158,5 @@ class ChartPage extends React.Component {
 ChartPage.propTypes = {
   location: PropTypes.array,
 };
+
 export default ChartPage;

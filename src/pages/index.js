@@ -6,9 +6,9 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 import Tile from '../components/tile';
 import AddMarkForm from '../components/addMarkForm';
+import MarksList from '../components/markList';
 
 import Boat from '../images/boat.svg';
-import Delete from '../images/delete.svg';
 
 // --------------------------------------------------
 // Styled Components
@@ -68,39 +68,118 @@ const ButtonLink = styled(Link)`
   }
 `;
 
-const NoMarksLabel = styled.p`
-  width: 100%;
-  padding: 2em;
-  opacity: 0.75;
-  text-align: center;
-  font-size: 1em;
-  font-weight: 500;
-  color: var(--dark-blue);
-  border: 2px dashed rgba(0, 0, 0, 0.7);
-  border-radius: 15px;
-  margin: 0;
-`;
-
-const DeleteIcon = styled.input`
-  width: 20px;
-  position: absolute;
-  right: 10px;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-`;
-
 class IndexPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      marks: [],
+      // marks: [],
+      // TODO: remove dummy data
+      marks: [
+        {
+          mark: 'Island',
+          letter: 'I',
+          lat: 560.5721666666666666,
+          latDeg: 56,
+          latMin: 34.33,
+          long: 720.3555,
+          longDeg: 72,
+          longMin: 21.33,
+        },
+        {
+          mark: 'Island',
+          letter: 'I',
+          lat: 560.5721666666666666,
+          latDeg: 56,
+          latMin: 34.33,
+          long: 720.3555,
+          longDeg: 72,
+          longMin: 21.33,
+        },
+        {
+          mark: 'Island',
+          letter: 'I',
+          lat: 560.5721666666666666,
+          latDeg: 56,
+          latMin: 34.33,
+          long: 720.3555,
+          longDeg: 72,
+          longMin: 21.33,
+        },
+        {
+          mark: 'Island',
+          letter: 'I',
+          lat: 560.5721666666666666,
+          latDeg: 56,
+          latMin: 34.33,
+          long: 720.3555,
+          longDeg: 72,
+          longMin: 21.33,
+        },
+        {
+          mark: 'Island',
+          letter: 'I',
+          lat: 560.5721666666666666,
+          latDeg: 56,
+          latMin: 34.33,
+          long: 720.3555,
+          longDeg: 72,
+          longMin: 21.33,
+        },
+        {
+          mark: 'Island',
+          letter: 'I',
+          lat: 560.5721666666666666,
+          latDeg: 56,
+          latMin: 34.33,
+          long: 720.3555,
+          longDeg: 72,
+          longMin: 21.33,
+        },
+        {
+          mark: 'Island',
+          letter: 'I',
+          lat: 560.5721666666666666,
+          latDeg: 56,
+          latMin: 34.33,
+          long: 720.3555,
+          longDeg: 72,
+          longMin: 21.33,
+        },
+        {
+          mark: 'Island',
+          letter: 'I',
+          lat: 560.5721666666666666,
+          latDeg: 56,
+          latMin: 34.33,
+          long: 720.3555,
+          longDeg: 72,
+          longMin: 21.33,
+        },
+        {
+          mark: 'Island',
+          letter: 'I',
+          lat: 560.5721666666666666,
+          latDeg: 56,
+          latMin: 34.33,
+          long: 720.3555,
+          longDeg: 72,
+          longMin: 21.33,
+        },
+        {
+          mark: 'Island',
+          letter: 'I',
+          lat: 560.5721666666666666,
+          latDeg: 56,
+          latMin: 34.33,
+          long: 720.3555,
+          longDeg: 72,
+          longMin: 21.33,
+        },
+      ],
     };
 
     this.handleMarkAdd = this.handleMarkAdd.bind(this);
-    // ? Why doesnt handleMarkDelete need to be bound as well?
+    this.handleMarkDelete = this.handleMarkDelete.bind(this);
   }
 
   handleMarkAdd(values) {
@@ -120,7 +199,6 @@ class IndexPage extends Component {
   }
 
   render() {
-    // TODO: link this with marks object from form
     const { marks } = this.state;
 
     return (
@@ -163,46 +241,9 @@ class IndexPage extends Component {
         </Tile>
         <Tile>
           <h1>Marks</h1>
-          {marks.length > 0 ? (
-            <table>
-              <thead>
-                <tr>
-                  <th style={{ width: `30%` }}>Markname</th>
-                  <th>Letter</th>
-                  <th>Lattitude</th>
-                  <th>Longitude</th>
-                </tr>
-              </thead>
-              <tbody>
-                {marks.map((mark, index) => (
-                  <>
-                    <tr>
-                      <td style={{ overflowWrap: `break-word` }}>
-                        {mark.mark}
-                      </td>
-                      <td>{mark.letter}</td>
-                      <td>
-                        {mark.latDeg}° {mark.latMin}'
-                      </td>
-                      <td>
-                        {mark.longDeg}° {mark.longMin}'
-                        <DeleteIcon
-                          type="image"
-                          src={Delete}
-                          alt="Delete"
-                          onClick={e => this.handleMarkDelete(index, e)}
-                        />
-                      </td>
-                    </tr>
-                  </>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <NoMarksLabel>No marks added</NoMarksLabel>
-          )}
+          <MarksList marks={marks} onMarkDelete={this.handleMarkDelete} />
         </Tile>
-        <ButtonLink to="/bearing-chart/" state={{ marks }}>
+        <ButtonLink to="/chart-page/" state={{ marks }}>
           Generate bearing chart
         </ButtonLink>
       </Layout>

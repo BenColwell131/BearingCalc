@@ -9,6 +9,10 @@ const StyledDiv = styled.div`
   box-shadow: 0px 3px 6px rgba(216, 216, 216, 0.16);
   padding: 2.5em;
   margin-bottom: 1em;
+
+  @media (max-width: 30em) {
+    padding: 2.5em 1.75em;
+  }
 `;
 
 const Tile = ({ className, children }) => (
