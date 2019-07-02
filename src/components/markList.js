@@ -125,7 +125,7 @@ class MarksList extends Component {
                     type="image"
                     src={Delete}
                     alt="Delete"
-                    onClick={e => this.handleMarkDelete(index, e)}
+                    onClick={e => onMarkDelete(index, e)}
                   />
                 </td>
               </tr>

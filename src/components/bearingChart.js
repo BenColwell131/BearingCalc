@@ -130,34 +130,36 @@ class BearingChart extends Component {
         <>
           {marks.map(srcMark => (
             <SingleMarkTable>
-              <tr>
-                <th style={{ width: `60%` }}>{srcMark.mark}</th>
-                <th>{srcMark.letter}</th>
-              </tr>
-              <tr>
-                <th colSpan={2} style={{ backgroundColor: `#000` }}>
-                  To
-                </th>
-              </tr>
-              {marks.map(destMark => {
-                const res =
-                  srcMark !== destMark ? (
-                    <tr>
-                      <td>
-                        {destMark.mark} ( {destMark.letter} )
-                      </td>
-                      <td>
-                        {calculateBearing(
-                          srcMark.lat,
-                          srcMark.long,
-                          destMark.lat,
-                          destMark.long
-                        )}
-                      </td>
-                    </tr>
-                  ) : null;
-                return <>{res}</>;
-              })}
+              <tbody>
+                <tr>
+                  <th style={{ width: `60%` }}>{srcMark.mark}</th>
+                  <th>{srcMark.letter}</th>
+                </tr>
+                <tr>
+                  <th colSpan={2} style={{ backgroundColor: `#000` }}>
+                    To
+                  </th>
+                </tr>
+                {marks.map(destMark => {
+                  const res =
+                    srcMark !== destMark ? (
+                      <tr>
+                        <td>
+                          {destMark.mark} ( {destMark.letter} )
+                        </td>
+                        <td>
+                          {calculateBearing(
+                            srcMark.lat,
+                            srcMark.long,
+                            destMark.lat,
+                            destMark.long
+                          )}
+                        </td>
+                      </tr>
+                    ) : null;
+                  return <>{res}</>;
+                })}
+              </tbody>
             </SingleMarkTable>
           ))}
         </>

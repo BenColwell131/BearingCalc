@@ -49,8 +49,8 @@ const StyledButton = styled.button`
   }
 `;
 
-const Button = ({ children, primary, style, type }) => (
-  <StyledButton primary={primary} style={style} type={type}>
+const Button = ({ children, primary, onClick, style, type }) => (
+  <StyledButton primary={primary} onClick={onClick} style={style} type={type}>
     {children}
   </StyledButton>
 );
@@ -58,6 +58,7 @@ const Button = ({ children, primary, style, type }) => (
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   primary: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
   style: PropTypes.object,
   type: PropTypes.string,
 };

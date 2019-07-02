@@ -20,10 +20,11 @@ import BearingChart from '../components/bearingChart';
 
 const downloadPDF = () => {
   const chart = document.getElementById('bearingChart');
-  // canvas.toDataUrl returns img at 96DPI, A4 paper dimensions are 1123x794 at this (landscape).
+  // canvas.toDataUrl returns img at 96DPI, A4 paper dimensions are 1123x794px at this (landscape).
   const a4Width = 1123;
   const a4Height = 794;
 
+  // if (chart) {
   html2canvas(chart).then(canvas => {
     // scale if canvas > A4
     if (canvas.width > a4Width || canvas.height > a4Height) {
@@ -61,14 +62,16 @@ const downloadPDF = () => {
     pdf.addImage(pngChart, 'PNG', 0, 0);
     pdf.save('bearingChart.pdf');
   });
+  // } else {
+  // alert('PDF download only available on larger devices');
+  // }
 };
 
 const downloadCSV = () => {
-  // alert('To be implemented');
   const rows = document
     .getElementById('bearingChart')
     .getElementsByTagName('tr');
-
+  console.log(rows);
   let csvContent = 'data:text/csv;charset=utf-8,';
   for (const rowEl of rows) {
     const row = rowEl.children;
