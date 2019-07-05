@@ -23,7 +23,7 @@ const formValidationSchema = Yup.object().shape({
     .required('Required'),
   letter: Yup.string()
     .max(3, 'Too Long!')
-    .required('Required'),
+    .required('*'),
   latDeg: Yup.number()
     .typeError('Must be a number')
     .min(0, 'Must be >= 0')
@@ -73,6 +73,10 @@ const StyledInputGroup = styled.fieldset`
   }
 `;
 
+const CoordInputGroup = styled(StyledInputGroup)`
+  min-width: 14.375em;
+`;
+
 const StyledLabel = styled.label`
   font-size: 1em;
   font-weight: bold;
@@ -87,6 +91,7 @@ const StandardField = styled(Field)`
   padding: 15px 15px;
   width: 100%;
   transition: all 0.2s ease-in-out;
+  text-overflow: ellipsis;
 
   &:focus {
     border-color: var(--accent-blue);
@@ -101,6 +106,7 @@ const StandardField = styled(Field)`
 
 const DegField = styled(StandardField)`
   flex: 1 1 20%;
+  min-width: 3.25em;
 `;
 
 const MinField = styled(StandardField)`
@@ -110,7 +116,7 @@ const MinField = styled(StandardField)`
 const CardinalField = styled(StandardField)`
   flex: 1 1 20%;
   max-width: 4em;
-  min-width: 2em;
+  min-width: 3.5em;
 
   /* Select inputs are 2px taller than normal inputs */
   padding: 14px 3px 14px 15px;
@@ -144,6 +150,12 @@ class AddMarkForm extends Component {
           // Convert all input lat/long to DD format
           values.lat = convertToDD(values.latDeg, values.latMin);
           values.long = convertToDD(values.longDeg, values.longMin);
+
+          // Apply sign according to cardinal direction
+          values.lat = values.latCardinal === 'N' ? values.lat : -values.lat;
+          values.long =
+            values.longCardinal === 'E' ? values.long : -values.long;
+
           onMarkAdd(values); // Update state in index.js
 
           actions.resetForm();
@@ -167,13 +179,13 @@ class AddMarkForm extends Component {
                 autoComplete="off"
               />
             </StyledInputGroup>
-            <StyledInputGroup style={{ flex: `1 1 5%` }}>
+            <StyledInputGroup style={{ flex: `1 1 5%`, minWidth: `3em` }}>
               <StyledLabel>Letter:</StyledLabel>
               <StandardField
                 name="letter"
                 type="text"
                 placeholder={
-                  errors.letter && touched.letter ? errors.letter : 'Letter'
+                  errors.letter && touched.letter ? errors.letter : 'I'
                 }
                 errorCase={!!(errors.letter && touched.letter)}
                 title={errors.letter && touched.letter ? errors.letter : null}
@@ -181,13 +193,13 @@ class AddMarkForm extends Component {
               />
             </StyledInputGroup>
             {/* TODO abstract out into component */}
-            <StyledInputGroup>
+            <CoordInputGroup>
               <StyledLabel>Lattitude:</StyledLabel>
               <div style={{ display: `flex` }}>
                 <DegField
                   name="latDeg"
                   type="text"
-                  placeholder={errors.latDeg && touched.latDeg ? `!` : '54'}
+                  placeholder={errors.latDeg && touched.latDeg ? `*` : '54'}
                   errorCase={!!(errors.latDeg && touched.latDeg)}
                   title={errors.latDeg && touched.latDeg ? errors.latDeg : null}
                   autoComplete="off"
@@ -209,14 +221,14 @@ class AddMarkForm extends Component {
                   <option value="S">S</option>
                 </CardinalField>
               </div>
-            </StyledInputGroup>
-            <StyledInputGroup>
+            </CoordInputGroup>
+            <CoordInputGroup>
               <StyledLabel>Longitude:</StyledLabel>
               <div style={{ display: `flex` }}>
                 <DegField
                   name="longDeg"
                   type="text"
-                  placeholder={errors.longDeg && touched.longDeg ? `!` : '57'}
+                  placeholder={errors.longDeg && touched.longDeg ? `*` : '57'}
                   errorCase={!!(errors.longDeg && touched.longDeg)}
                   title={
                     errors.longDeg && touched.longDeg ? errors.longDeg : null
@@ -242,7 +254,7 @@ class AddMarkForm extends Component {
                   <option value="W">W</option>
                 </CardinalField>
               </div>
-            </StyledInputGroup>
+            </CoordInputGroup>
             <Button type="Submit" style={{ marginLeft: `auto` }}>
               Add
             </Button>
