@@ -54,23 +54,22 @@ const formValidationSchema = Yup.object().shape({
 const StyledForm = styled(Form)`
   display: flex;
   justify-content: space-between;
-
   @media (max-width: 60em) {
     flex-direction: column;
   }
 `;
 
 const StyledInputGroup = styled.fieldset`
+  flex: 1 1 25%;
   display: flex;
+  min-width: 0;
   flex-direction: column;
   border: none;
   padding: 0;
-  margin: 0;
-  margin-right: 1em;
-  width: 100%;
+  margin: 0 1.5em 0 0;
 
   @media (max-width: 60em) {
-    margin-bottom: 1em;
+    margin: 0 0 1em 0;
   }
 `;
 
@@ -100,15 +99,28 @@ const StandardField = styled(Field)`
   }
 `;
 
-const MiniField = styled(StandardField)`
-  width: 4rem;
+const DegField = styled(StandardField)`
+  flex: 1 1 20%;
+`;
+
+const MinField = styled(StandardField)`
+  flex: 2 1 30%;
+`;
+
+const CardinalField = styled(StandardField)`
+  flex: 1 1 20%;
+  max-width: 4em;
+  min-width: 2em;
+
+  /* Select inputs are 2px taller than normal inputs */
+  padding: 14px 3px 14px 15px;
 `;
 
 const FieldUnit = styled.p`
   font-size: 2em;
   font-weight: bold;
-  margin: 0;
-  padding: 0 0.2rem;
+  margin: -8px 0 0 0;
+  padding: 0 0.5rem 0 0.2rem;
 `;
 
 class AddMarkForm extends Component {
@@ -122,8 +134,10 @@ class AddMarkForm extends Component {
           letter: '',
           latDeg: '',
           latMin: '',
+          latCardinal: 'N',
           longDeg: '',
           longMin: '',
+          longCardinal: 'W',
         }}
         validationSchema={formValidationSchema}
         onSubmit={(values, actions) => {
@@ -152,11 +166,8 @@ class AddMarkForm extends Component {
                 title={errors.mark && touched.mark ? errors.mark : null}
                 autoComplete="off"
               />
-              {/* {errors.mark && touched.mark ? (
-                    <div>{errors.mark}</div>
-                  ) : null} */}
             </StyledInputGroup>
-            <StyledInputGroup>
+            <StyledInputGroup style={{ flex: `1 1 5%` }}>
               <StyledLabel>Letter:</StyledLabel>
               <StandardField
                 name="letter"
@@ -173,7 +184,7 @@ class AddMarkForm extends Component {
             <StyledInputGroup>
               <StyledLabel>Lattitude:</StyledLabel>
               <div style={{ display: `flex` }}>
-                <MiniField
+                <DegField
                   name="latDeg"
                   type="text"
                   placeholder={errors.latDeg && touched.latDeg ? `!` : '54'}
@@ -182,23 +193,27 @@ class AddMarkForm extends Component {
                   autoComplete="off"
                 />
                 <FieldUnit>°</FieldUnit>
-                <StandardField
+                <MinField
                   name="latMin"
                   type="text"
                   placeholder={
-                    errors.latMin && touched.latMin ? errors.latMin : '94.2'
+                    errors.latMin && touched.latMin ? errors.latMin : '44.2'
                   }
                   errorCase={!!(errors.latMin && touched.latMin)}
                   title={errors.latMin && touched.latMin ? errors.latMin : null}
                   autoComplete="off"
                 />
                 <FieldUnit>'</FieldUnit>
+                <CardinalField component="select" name="longCardinal">
+                  <option value="N">N</option>
+                  <option value="S">S</option>
+                </CardinalField>
               </div>
             </StyledInputGroup>
             <StyledInputGroup>
               <StyledLabel>Longitude:</StyledLabel>
               <div style={{ display: `flex` }}>
-                <MiniField
+                <DegField
                   name="longDeg"
                   type="text"
                   placeholder={errors.longDeg && touched.longDeg ? `!` : '57'}
@@ -209,11 +224,11 @@ class AddMarkForm extends Component {
                   autoComplete="off"
                 />
                 <FieldUnit>°</FieldUnit>
-                <StandardField
+                <MinField
                   name="longMin"
                   type="text"
                   placeholder={
-                    errors.longMin && touched.longMin ? errors.longMin : '92.8'
+                    errors.longMin && touched.longMin ? errors.longMin : '22.8'
                   }
                   errorCase={!!(errors.longMin && touched.longMin)}
                   title={
@@ -222,6 +237,10 @@ class AddMarkForm extends Component {
                   autoComplete="off"
                 />
                 <FieldUnit>'</FieldUnit>
+                <CardinalField component="select" name="longCardinal">
+                  <option value="E">E</option>
+                  <option value="W">W</option>
+                </CardinalField>
               </div>
             </StyledInputGroup>
             <Button type="Submit" style={{ marginLeft: `auto` }}>

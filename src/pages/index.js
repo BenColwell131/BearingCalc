@@ -211,6 +211,7 @@ class IndexPage extends Component {
             `bearing`,
             `generator`,
             `racing`,
+            `round the cans`,
           ]}
         />
         <FlexTile>

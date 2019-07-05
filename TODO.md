@@ -17,10 +17,13 @@
 - [ ] Readme
 - [ ] Tidy code
 - [x] No marks picture
-- [ ] Chart download weird when on small screens.
+- [ ] Chart download weird when on small screens. -> disable?
 - [ ] N/S and E/W
 - [ ] Bearings being calculated 2 times on resize
 - [ ] Collapsible single mark tables
 - [ ] Homepage button
 - [x] handleMarkDelete not working
 - [x] Download buttons need updating now that table is abstracted
+- [ ] 404
+- [ ] Select field outlines
+- [ ] Rework add mark form flex
