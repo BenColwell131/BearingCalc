@@ -98,9 +98,26 @@ const downloadCSV = () => {
 const DownloadButtons = styled.div`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 
   @media (max-width: 30em) {
     flex-direction: column;
+  }
+`;
+
+const SimpleLink = styled(Link)`
+  text-decoration: none;
+  font-size: 1.125em;
+  font-weight: 400;
+  color: ${`var(--dark-blue)`};
+  opacity: 0.8;
+  transition: all 0.3s ease-in-out;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+    color: var(--accent-blue);
+    transform: translateY(-0.05em);
   }
 `;
 
@@ -147,12 +164,14 @@ class ChartPage extends React.Component {
           )}
         </Tile>
         <DownloadButtons>
+          <SimpleLink to="/" style={{ marginRight: `auto` }}>
+            &#8592; Back to marks
+          </SimpleLink>
           <Button onClick={downloadPDF}>Download PDF</Button>
           <Button primary onClick={downloadCSV}>
             Download CSV
           </Button>
         </DownloadButtons>
-        <Link to="/">Go back to the homepage</Link>
       </Layout>
     );
   }

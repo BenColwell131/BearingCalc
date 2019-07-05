@@ -20,11 +20,12 @@
 - [ ] Favicon
 - [ ] Bearing chart page text/icon?
 - [ ] Chart download weird when on small screens. -> disable?
-- [ ] Homepage button
+- [x] Homepage button
 - [ ] 404
 - [ ] Check new bearings are correct
 - [ ] Magnetic variation -> State in text that its true?
 - [ ] CSV download on small screens -> adapt function
+- [ ] Compatibility check (Firefox in particular)
 - [ ] Readme
 - [ ] Tidy code
 

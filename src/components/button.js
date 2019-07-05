@@ -33,7 +33,7 @@ const StyledButton = styled.button`
     transform: translateY(2px);
   }
 
-  &:nth-child(2) {
+  &:last-of-type {
     margin-left: 1em;
   }
 
