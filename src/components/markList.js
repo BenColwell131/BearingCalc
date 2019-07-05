@@ -79,10 +79,10 @@ class MarksList extends Component {
                   <td style={{ overflowWrap: `break-word` }}>{mark.mark}</td>
                   <td>{mark.letter}</td>
                   <td>
-                    {mark.latDeg}° {mark.latMin}'
+                    {mark.latDeg}° {mark.latMin}' {mark.latCardinal}
                   </td>
                   <td>
-                    {mark.longDeg}° {mark.longMin}'
+                    {mark.longDeg}° {mark.longMin}' {mark.longCardinal}
                     <DeleteIcon
                       type="image"
                       src={Delete}
