@@ -52,29 +52,8 @@ const SingleMarkTable = styled.table`
 `;
 
 class BearingChart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { showFullChart: true };
-
-    this.handleResize = this.handleResize.bind(this);
-  }
-
-  componentDidMount() {
-    this.handleResize();
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-  }
-
-  handleResize() {
-    this.setState({ showFullChart: window.innerWidth > 960 });
-  }
-
   render() {
-    const { showFullChart } = this.state;
-    const { marks } = this.props;
+    const { marks, showFullChart } = this.props;
     let chart;
 
     if (showFullChart) {
@@ -172,5 +151,6 @@ class BearingChart extends Component {
 
 BearingChart.propTypes = {
   marks: PropTypes.object.isRequired,
+  showFullChart: PropTypes.bool.isRequired,
 };
 export default BearingChart;

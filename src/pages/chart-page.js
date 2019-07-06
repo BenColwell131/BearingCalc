@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import styled from 'styled-components';
@@ -101,7 +101,7 @@ const DownloadButtons = styled.div`
   align-items: center;
 
   @media (max-width: 30em) {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 `;
 
@@ -135,25 +135,42 @@ const FlexContainer = styled.div`
   flex-direction: column;
   text-align: center;
 `;
-class ChartPage extends React.Component {
+class ChartPage extends Component {
   constructor(props) {
     super(props);
     const { location } = this.props;
 
     this.state = {
       marks: location.state.marks,
+      smallScreen: false,
     };
+
+    this.handleResize = this.handleResize.bind(this);
+  }
+
+  componentDidMount() {
+    this.handleResize();
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize() {
+    this.setState({ smallScreen: window.innerWidth < 960 });
   }
 
   render() {
-    const { marks } = this.state;
+    const { marks, smallScreen } = this.state;
+
     return (
       <Layout>
         <SEO title="Page two" />
         <Tile>
           <h1>Bearing chart</h1>
           {marks.length > 0 ? (
-            <BearingChart marks={marks} />
+            <BearingChart marks={marks} showFullChart={!smallScreen} />
           ) : (
             <FlexContainer>
               <LostImage src={Lost} alt="Lost" />
@@ -167,7 +184,7 @@ class ChartPage extends React.Component {
           <SimpleLink to="/" style={{ marginRight: `auto` }}>
             &#8592; Back to marks
           </SimpleLink>
-          <Button onClick={downloadPDF}>Download PDF</Button>
+          {!smallScreen && <Button onClick={downloadPDF}>Download PDF</Button>}
           <Button primary onClick={downloadCSV}>
             Download CSV
           </Button>
