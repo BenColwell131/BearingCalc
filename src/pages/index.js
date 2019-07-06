@@ -68,6 +68,12 @@ const ButtonLink = styled(Link)`
   }
 `;
 
+const Note = styled.p`
+  font-size: 0.8rem;
+  font-style: italic;
+  margin-bottom: 0;
+`;
+
 class IndexPage extends Component {
   constructor(props) {
     super(props);
@@ -217,16 +223,19 @@ class IndexPage extends Component {
         <FlexTile>
           <div style={{ flex: 4 }}>
             <h1>Welcome</h1>
+            <h2>
+              Create your own bearing charts for quick reference while sailing!
+            </h2>
             <p>
-              Shrouds hornswaggle grapple lookout haul wind parrel flogging hulk
-              lad doubloon.
+              To create your custom chart, define all the marks you'd like
+              included below and sit back! The site will calculate all bearings
+              between each mark and present them in a table for quick reference.
+              Charts can then also be downloaded in CSV or PDF format.
             </p>
-            <p style={{ fontWeight: `300`, marginBottom: 0 }}>
-              Shrouds hornswaggle grapple lookout haul wind parrel flogging hulk
-              lad doubloon. Handsomely spanker nipper rope's end scourge of the
-              seven seas cackle fruit Sea Legs boatswain topmast dance the
-              hempen jig.
-            </p>
+            <Note>
+              <strong>Note:</strong> Co-ordinates should be given in{' '}
+              <strong>DDM</strong> format.
+            </Note>
           </div>
           <ImageContainer>
             <img

@@ -21,12 +21,12 @@ h1 {
   font-size: 1.875em;
   line-height: 2rem;
   color: var(--dark-blue);
-  /* opacity: 0.87; */
 }
 
 h2 {
   font-size: 1em;
   margin-top: 0;
+  opacity: 0.87;
 }
 
 p {

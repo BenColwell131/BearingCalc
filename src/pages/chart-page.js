@@ -183,9 +183,11 @@ class ChartPage extends Component {
             &#8592; Back to marks
           </SimpleLink>
           {!smallScreen && <Button onClick={downloadPDF}>Download PDF</Button>}
-          <Button primary onClick={downloadCSV}>
-            Download CSV
-          </Button>
+          {!smallScreen && (
+            <Button primary onClick={downloadCSV}>
+              Download CSV
+            </Button>
+          )}
         </DownloadButtons>
       </Layout>
     );
