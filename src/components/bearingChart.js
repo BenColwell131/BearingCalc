@@ -109,7 +109,7 @@ class BearingChart extends Component {
         <>
           {marks.map(srcMark => (
             <SingleMarkTable>
-              <tbody>
+              <thead>
                 <tr>
                   <th style={{ width: `60%` }}>{srcMark.mark}</th>
                   <th>{srcMark.letter}</th>
@@ -119,6 +119,8 @@ class BearingChart extends Component {
                     To
                   </th>
                 </tr>
+              </thead>
+              <tbody>
                 {marks.map(destMark => {
                   const res =
                     srcMark !== destMark ? (
@@ -150,7 +152,7 @@ class BearingChart extends Component {
 }
 
 BearingChart.propTypes = {
-  marks: PropTypes.object.isRequired,
+  marks: PropTypes.array.isRequired,
   showFullChart: PropTypes.bool.isRequired,
 };
 export default BearingChart;

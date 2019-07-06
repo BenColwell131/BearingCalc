@@ -75,20 +75,18 @@ const downloadCSV = () => {
   let csvContent = 'data:text/csv;charset=utf-8,';
   for (const rowEl of rows) {
     const row = rowEl.children;
-    // console.log(row);
     for (const cell of row) {
-      // console.log(cell.innerHTML);
       csvContent += `${cell.innerHTML},`;
     }
     csvContent += '\n';
   }
-  // console.log(csvContent);
   const encodedURI = encodeURI(csvContent);
   const dlLink = document.createElement('a');
   dlLink.setAttribute('href', encodedURI);
   dlLink.setAttribute('download', 'bearingChart.csv');
   document.body.appendChild(dlLink);
   dlLink.click();
+  document.body.removeChild(dlLink);
 };
 
 // --------------------------------------------------
