@@ -179,7 +179,7 @@ class ChartPage extends Component {
 
     return (
       <Layout>
-        <SEO title="Page two" />
+        <SEO title="Bearing chart" />
 
         {marks.length > 0 ? (
           <>
