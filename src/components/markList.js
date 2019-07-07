@@ -141,7 +141,7 @@ class MarksList extends Component {
 }
 
 MarksList.propTypes = {
-  marks: PropTypes.object.isRequired,
+  marks: PropTypes.array.isRequired,
   onMarkDelete: PropTypes.func.isRequired,
 };
 

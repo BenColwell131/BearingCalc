@@ -58,7 +58,7 @@ const Button = ({ children, primary, onClick, style, type }) => (
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   primary: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   style: PropTypes.object,
   type: PropTypes.string,
 };

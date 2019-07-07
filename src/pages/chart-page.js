@@ -152,9 +152,9 @@ class ChartPage extends Component {
   constructor(props) {
     super(props);
     const { location } = this.props;
-
+    const marks = location.state ? location.state.marks : []; // Allows gatsby to build (location not available whilst building)
     this.state = {
-      marks: location.state.marks,
+      marks,
       smallScreen: false,
     };
 

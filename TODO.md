@@ -32,6 +32,7 @@
 _Stretch Goals / Future_
 
 - [ ] Collapsible single mark tables
+- [ ] Magnetic variation
 - [ ] Bearings being calculated 2 times on resize
 - [ ] Select field outlines -> More complicated than worth
 - [ ] CSV download on small screens

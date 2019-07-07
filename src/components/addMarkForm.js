@@ -85,7 +85,7 @@ const StyledLabel = styled.label`
 
 const StandardField = styled(Field)`
   border: ${props =>
-    props.errorCase ? `1px solid var(--error)` : `1px solid var(--dark-grey)`};
+    props.errorcase ? `1px solid var(--error)` : `1px solid var(--dark-grey)`};
   color: var(--dark-blue);
   border-radius: 5px;
   padding: 15px 15px;
@@ -100,8 +100,8 @@ const StandardField = styled(Field)`
   }
 
   ::placeholder {
-    color: ${props => (props.errorCase ? `var(--error)` : `var(--dark-blue)`)};
-    opacity: ${props => (props.errorCase ? `1` : `0.7`)};
+    color: ${props => (props.errorcase ? `var(--error)` : `var(--dark-blue)`)};
+    opacity: ${props => (props.errorcase ? `1` : `0.7`)};
   }
 `;
 
@@ -175,7 +175,7 @@ class AddMarkForm extends Component {
                 placeholder={
                   errors.mark && touched.mark ? errors.mark : 'Island'
                 }
-                errorCase={!!(errors.mark && touched.mark)}
+                errorcase={!!(errors.mark && touched.mark)}
                 title={errors.mark && touched.mark ? errors.mark : null}
                 autoComplete="off"
               />
@@ -188,7 +188,7 @@ class AddMarkForm extends Component {
                 placeholder={
                   errors.letter && touched.letter ? errors.letter : 'I'
                 }
-                errorCase={!!(errors.letter && touched.letter)}
+                errorcase={!!(errors.letter && touched.letter)}
                 title={errors.letter && touched.letter ? errors.letter : null}
                 autoComplete="off"
               />
@@ -201,7 +201,7 @@ class AddMarkForm extends Component {
                   name="latDeg"
                   type="text"
                   placeholder={errors.latDeg && touched.latDeg ? `*` : '54'}
-                  errorCase={!!(errors.latDeg && touched.latDeg)}
+                  errorcase={!!(errors.latDeg && touched.latDeg)}
                   title={errors.latDeg && touched.latDeg ? errors.latDeg : null}
                   autoComplete="off"
                 />
@@ -212,12 +212,12 @@ class AddMarkForm extends Component {
                   placeholder={
                     errors.latMin && touched.latMin ? errors.latMin : '44.2'
                   }
-                  errorCase={!!(errors.latMin && touched.latMin)}
+                  errorcase={!!(errors.latMin && touched.latMin)}
                   title={errors.latMin && touched.latMin ? errors.latMin : null}
                   autoComplete="off"
                 />
                 <FieldUnit>'</FieldUnit>
-                <CardinalField component="select" name="longCardinal">
+                <CardinalField component="select" name="latCardinal">
                   <option value="N">N</option>
                   <option value="S">S</option>
                 </CardinalField>
@@ -230,7 +230,7 @@ class AddMarkForm extends Component {
                   name="longDeg"
                   type="text"
                   placeholder={errors.longDeg && touched.longDeg ? `*` : '57'}
-                  errorCase={!!(errors.longDeg && touched.longDeg)}
+                  errorcase={!!(errors.longDeg && touched.longDeg)}
                   title={
                     errors.longDeg && touched.longDeg ? errors.longDeg : null
                   }
@@ -243,7 +243,7 @@ class AddMarkForm extends Component {
                   placeholder={
                     errors.longMin && touched.longMin ? errors.longMin : '22.8'
                   }
-                  errorCase={!!(errors.longMin && touched.longMin)}
+                  errorcase={!!(errors.longMin && touched.longMin)}
                   title={
                     errors.longMin && touched.longMin ? errors.longMin : null
                   }
