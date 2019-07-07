@@ -20,10 +20,10 @@
 - [x] Chart pdf download weird when on small screens. -> disable?
 - [x] Favicon
 - [x] Text content
-- [ ] Magnetic variation -> State in text that its true?
-- [ ] Check new bearings are correct
-- [ ] Bearing chart page text/icon?
-- [ ] 404
+- [x] 404
+- [x] Check new bearings are correct
+- [x] Magnetic variation -> State in text that its true?
+- [x] Bearing chart page text/icon?
 - [ ] Compatibility check (Firefox in particular)
 - [ ] Deploy to Netlify
 - [ ] Readme

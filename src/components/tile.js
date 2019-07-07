@@ -15,13 +15,16 @@ const StyledDiv = styled.div`
   }
 `;
 
-const Tile = ({ className, children }) => (
-  <StyledDiv className={className}>{children}</StyledDiv>
+const Tile = ({ className, children, style }) => (
+  <StyledDiv style={style} className={className}>
+    {children}
+  </StyledDiv>
 );
 
 Tile.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  style: PropTypes.object,
 };
 
 export default Tile;

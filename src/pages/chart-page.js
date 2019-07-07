@@ -12,6 +12,7 @@ import Tile from '../components/tile';
 import Button from '../components/button';
 
 import Lost from '../images/lost.svg';
+import Sailor from '../images/sailor.svg';
 import BearingChart from '../components/bearingChart';
 
 // --------------------------------------------------
@@ -92,6 +93,27 @@ const downloadCSV = () => {
 // --------------------------------------------------
 // Styled components
 // --------------------------------------------------
+const FlexTile = styled(Tile)`
+  display: flex;
+`;
+
+const ImageContainer = styled.div`
+  order: 1;
+  flex: 1;
+  margin: 0 auto;
+  align-self: center;
+  text-align: center;
+  min-width: 13em;
+
+  @media (max-width: 60em) {
+    display: none;
+  }
+`;
+
+const Note = styled.p`
+  font-size: 0.8rem;
+  font-style: italic;
+`;
 
 const DownloadButtons = styled.div`
   display: flex;
@@ -126,13 +148,6 @@ const LostImage = styled.img`
   padding: 1em;
 `;
 
-const FlexContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-`;
 class ChartPage extends Component {
   constructor(props) {
     super(props);
@@ -165,19 +180,45 @@ class ChartPage extends Component {
     return (
       <Layout>
         <SEO title="Page two" />
-        <Tile>
-          <h1>Bearing chart</h1>
-          {marks.length > 0 ? (
-            <BearingChart marks={marks} showFullChart={!smallScreen} />
-          ) : (
-            <FlexContainer>
-              <LostImage src={Lost} alt="Lost" />
-              <p style={{ marginBottom: 0 }}>
-                No marks defined. <Link to="/">Go back</Link> and define some?
-              </p>
-            </FlexContainer>
-          )}
-        </Tile>
+
+        {marks.length > 0 ? (
+          <>
+            <FlexTile>
+              <div style={{ flex: 4 }}>
+                <h1>Bearing chart</h1>
+                <h2>All done! Your bearing chart can be found below.</h2>
+                <p>
+                  Chart is now available for download. For best results,
+                  download is available on large devices only. To tweak
+                  formatting, download as a CSV and open in a cell based editor
+                  (e.g: Excel, Google Sheets).
+                </p>
+                <Note>
+                  <strong>Note: </strong>All bearings given are true, no
+                  magnetic variation has been accounted for.
+                </Note>
+              </div>
+              <ImageContainer>
+                <img
+                  src={Sailor}
+                  alt="Sailor"
+                  style={{ width: `70%`, height: `auto` }}
+                />
+              </ImageContainer>
+            </FlexTile>
+            <Tile>
+              <BearingChart marks={marks} showFullChart={!smallScreen} />
+            </Tile>
+          </>
+        ) : (
+          <FlexTile style={{ flexDirection: `column`, alignItems: `center` }}>
+            <LostImage src={Lost} alt="Lost" />
+            <p style={{ marginBottom: 0 }}>
+              No marks defined. <Link to="/">Go back</Link> and define some?
+            </p>
+          </FlexTile>
+        )}
+
         <DownloadButtons>
           <SimpleLink to="/" style={{ marginRight: `auto` }}>
             &#8592; Back to marks

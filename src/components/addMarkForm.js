@@ -11,9 +11,9 @@ import Button from './button';
 // Functions
 // --------------------------------------------------
 
-// Converts a lat OR a long value from DDM lat/long format to DD lat.long format
+// Converts a lat OR a long value from DDM lat/long format to DD lat/long format
 function convertToDD(deg, min) {
-  return deg + min / 60;
+  return Number(deg) + Number(min) / 60;
 }
 
 // Validation schema for new mark form

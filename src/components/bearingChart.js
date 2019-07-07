@@ -18,6 +18,11 @@ Math.radians = function(degrees) {
 
 // Calculate bearing between two lat/long's in DD format
 function calculateBearing(srcLat, srcLong, destLat, destLong) {
+  console.log('TCL: calculateBearing -> srcLat', srcLat);
+  console.log('TCL: calculateBearing -> srcLong', srcLong);
+  console.log('TCL: calculateBearing -> destLat', destLat);
+  console.log('TCL: calculateBearing -> destLong', destLong);
+
   const y =
     Math.sin(Math.radians(destLong) - Math.radians(srcLong)) *
     Math.cos(Math.radians(destLat));
@@ -27,14 +32,9 @@ function calculateBearing(srcLat, srcLong, destLat, destLong) {
       Math.cos(Math.radians(destLat)) *
       Math.cos(Math.radians(destLong) - Math.radians(srcLong));
   let brng = Math.degrees(Math.atan2(y, x));
-
-  // TODO: Comment below lines.
-  brng = (brng + 360) % 360; //
-
-  // TODO: Implement correct magnetic variation
-  brng += 5; // Account for 5deg west variation of magnetic North.
-  brng = Math.round(brng);
-
+  brng = (brng + 360) % 360; // Keep within 360deg
+  brng = Math.round(brng); // Remove decimals
+  // brng += 5; // Account for 5deg west variation
   return brng;
 }
 
@@ -54,6 +54,7 @@ const SingleMarkTable = styled.table`
 class BearingChart extends Component {
   render() {
     const { marks, showFullChart } = this.props;
+    console.log('TCL: BearingChart -> render -> marks', marks);
     let chart;
 
     if (showFullChart) {
