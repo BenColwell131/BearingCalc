@@ -90,6 +90,7 @@ const StandardField = styled(Field)`
   border-radius: 5px;
   padding: 15px 15px;
   width: 100%;
+  min-width: 0;
   transition: all 0.2s ease-in-out;
   text-overflow: ellipsis;
 
