@@ -18,11 +18,6 @@ Math.radians = function(degrees) {
 
 // Calculate bearing between two lat/long's in DD format
 function calculateBearing(srcLat, srcLong, destLat, destLong) {
-  console.log('TCL: calculateBearing -> srcLat', srcLat);
-  console.log('TCL: calculateBearing -> srcLong', srcLong);
-  console.log('TCL: calculateBearing -> destLat', destLat);
-  console.log('TCL: calculateBearing -> destLong', destLong);
-
   const y =
     Math.sin(Math.radians(destLong) - Math.radians(srcLong)) *
     Math.cos(Math.radians(destLat));
